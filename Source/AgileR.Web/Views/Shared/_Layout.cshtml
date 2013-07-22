@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="@Url.Content("~/content/less/bootstrap.css")" rel="stylesheet">
+    <link href="@Url.Content("~/content/less/responsive.less")" rel="stylesheet">
+    @RenderSection("Header", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+  </head>
+    <body>
+        @RenderBody()
+        @RenderSection("Footer", required: false)
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @RenderSection("scripts", required: false)
+    </body>
+</html>

@@ -1,0 +1,38 @@
+﻿<div>
+    
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="brand" data-bind="attr: { href: router.visibleRoutes()[0].hash }">AgileR</a>
+                <div class="nav-collapse collapse">
+                    <p class="navbar-text pull-right">
+                        Logged in as <a href="#" class="navbar-link">Username</a>
+                    </p>
+                    <ul class="nav" data-bind="foreach: router.visibleRoutes">
+                        <li data-bind="css: { active: isActive }">
+                            <a data-bind="attr: { href: hash }, html: name"></a>
+                        </li>
+                    </ul>
+                    <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
+                <i class="icon-spinner icon-2x icon-spin"></i>
+            </div>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid page-host">
+        <!--ko compose: { 
+            model: router.activeItem, //wiring the router
+            afterCompose: router.afterCompose, //wiring the router
+            transition:'entrance', //use the 'entrance' transition when switching views
+            cacheViews:true //telling composition to keep views in the dom, and reuse them (only a good idea with singleton view models)
+            }--><!--/ko-->
+    </div>
+</div>

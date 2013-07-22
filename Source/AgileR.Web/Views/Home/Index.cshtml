@@ -1,0 +1,56 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "AgileR";
+}
+@section Header
+{
+    <link href="@Url.Content("~/content/site.less")" rel="stylesheet">
+    <link href="@Url.Content("~/content/durandal.css")" rel="stylesheet">
+    <style type="text/css">
+        @@media (min-width: 979px) {
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        }
+
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @@media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+    </style>
+}
+
+<div id="applicationHost">
+    
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="~/Scripts/knockout-2.3.0.js"></script>
+    <script type="text/javascript" src="~/Scripts/sammy-0.7.4.js"></script>
+    @if (HttpContext.Current.IsDebuggingEnabled)
+    {
+        <script type="text/javascript" src="~/App/durandal/amd/require.js" data-main="@Url.Content("~/App/main")"></script>
+    }
+    else
+    {
+        <script type="text/javascript" src="~/App/main-built.js"></script>
+    }
+}
+
+@section Footer
+{
+    <footer>
+        <p>&copy; Company 2013</p>
+    </footer>
+}
+

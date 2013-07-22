@@ -1,0 +1,55 @@
+#ignore thumbnails created by windows
+[Tt]humbs.db
+*.DS_Store
+#Ignore files build by Visual Studio
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+[Bb]in
+[Dd]ebug*/
+*.lib
+*.sbr
+*.xap
+obj/
+[Rr]elease*/
+_ReSharper*/
+[Tt]est[Rr]esult*
+Generated_Code/
+ClientBin/
+[Bb]uild/
+*.user
+*.schemaview
+*.dbmdl
+*.csproj.ReSharper
+*docstates
+*csproj.user
+*ReSharper
+*ClientBin
+*.favdoc
+StyleCop.Cache
+*received.txt
+*.ncrunchproject
+*.ncrunchsolution
+UpgradeLog.*
+_UpgradeReport_Files/
+_TeamCity*
+Visual Studio 2012/Visualizers/attribcache90.bin
+Visual Studio 2012/Visualizers/autoexp.cs
+Visual Studio 2012/Visualizers/autoexp.dll
+Visual Studio 2012/Visualizers/autoexpce.cs
+Visual Studio 2012/Visualizers/autoexpce.dll
+logfile*.txt
