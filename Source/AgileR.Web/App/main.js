@@ -4,12 +4,16 @@
     }
 });
 
-define(['durandal/app', 'durandal/system', 'durandal/viewLocator', 'durandal/plugins/router', 'durandal/widget'],
+define("jquery", function () {
+    return window.jQuery;
+});
+
+define(['durandal/app', 'durandal/system', 'durandal/viewLocator', 'durandal/plugins/router', 'durandal/widget', 'viewmodels/toastrEvents', 'models/datacoordinator'],
   function (app, system, viewLocator, router, widget) {
 
       system.debug(true);
 
-      app.title = 'Durandal Samples';
+      app.title = 'AgileR';
       app.start().then(function () {
           //Replace 'viewmodels' in the moduleId with 'views' to locate the view.
           //Look for partial views in a 'views' folder in the root.
@@ -21,6 +25,7 @@ define(['durandal/app', 'durandal/system', 'durandal/viewLocator', 'durandal/plu
           //configure routing
           router.useConvention();
           router.mapNav('welcome');
+          router.mapRoute('board/:boardId');
 
           app.adaptToDevice();
 

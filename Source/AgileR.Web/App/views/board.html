@@ -1,0 +1,13 @@
+﻿<div class="container-fluid">
+    <div class="row-fluid" id="agile-columns" data-bind="foreach: columns">
+
+        <div class="span3 well column" data-bind="attr: { 'data-id': id }">
+            <h2 contenteditable="true" data-bind="text: title"></h2>
+            
+            <div class="cards" data-bind="foreach: tasks">
+                <div class="well alert alert-info draggable" data-bind="text: title, attr: { 'data-id': id }, drag: {}"></div>
+            </div>
+        </div>
+      
+    </div>
+</div>

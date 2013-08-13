@@ -145,6 +145,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\durandal\plugins\ko.draggable.js" />
+    <Content Include="App\models\board.js" />
+    <Content Include="App\models\guid.js" />
+    <Content Include="App\models\task.js" />
+    <Content Include="App\viewmodels\toastrEvents.js" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -192,8 +197,12 @@
     <Content Include="App\durandal\widget.js" />
     <Content Include="App\main.js" />
     <Content Include="App\durandal\plugins\router.js" />
+    <Content Include="App\models\datacoordinator.js" />
+    <Content Include="App\models\tasklist.js" />
+    <Content Include="App\viewmodels\board.js" />
     <Content Include="App\viewmodels\shell.js" />
     <Content Include="App\viewmodels\welcome.js" />
+    <Content Include="App\views\board.html" />
     <Content Include="App\views\shell.html" />
     <Content Include="App\views\welcome.html" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -286,6 +295,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tooltip.min.css" />
+    <Content Include="Content\toastr.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Areas\HelpPage\Views\Web.config" />
@@ -342,6 +353,7 @@
     <Content Include="Content\less\accordion.less" />
     <Content Include="Content\Cosmo\bootswatch.less" />
     <Content Include="Content\Cosmo\variables.less" />
+    <Content Include="Content\toastr.less" />
     <None Include="Properties\PublishProfiles\Local.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -362,8 +374,12 @@
     <Content Include="Scripts\knockout-2.3.0.js" />
     <Content Include="Scripts\less.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\postal.js" />
     <Content Include="Scripts\sammy-0.7.4.js" />
     <Content Include="Scripts\sammy-0.7.4.min.js" />
+    <Content Include="Scripts\toastr.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\underscore-min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -394,7 +410,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\models\" />
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
   </ItemGroup>
