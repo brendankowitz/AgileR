@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\durandal\plugins\ko.drop.js" />
     <Content Include="App\urlBuilder.js" />
     <Content Include="App\durandal\plugins\ko.draggable.js" />
     <Content Include="App\models\board.js" />
@@ -401,7 +402,7 @@
     <Content Include="Scripts\postal.js" />
     <Content Include="Scripts\q.js" />
     <Content Include="Scripts\q.min.js" />
-    <Content Include="Scripts\sammy-0.7.4.js" />
+    <Content Include="Scripts\sammy.js" />
     <Content Include="Scripts\sammy-0.7.4.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />

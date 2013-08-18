@@ -6,6 +6,10 @@
         this.description = ko.observable(from.Description || from.description);
         this.index = ko.observable(from.Index || from.index);
     };
+    
+    task.prototype.asJSON = function () {
+        return ko.toJSON(this);
+    };
 
     return function (initial) { return new task(initial || {}); };
     

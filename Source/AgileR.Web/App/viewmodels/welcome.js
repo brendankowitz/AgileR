@@ -5,16 +5,12 @@
     var welcome = function () {
         var context = this;
         this.displayName = 'Task Boards';
-        this.boards = ko.observableArray([]);
+        this.boards = datacoordinator.boards;
         this.newBoard = boardModel();
         this.createNewBoard = function() {
             channel.publish("insert.board.request", { entity: context.newBoard });
             return false;
         };
-
-        channel.subscribe("load.boards.response", function(data) {
-            context.boards(data());
-        }).once();
 
         channel.publish("load.boards.request");
     };

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace AgileR.Web.Intrastructure.Entities
 {
@@ -13,6 +14,7 @@ namespace AgileR.Web.Intrastructure.Entities
         public string Title { get; set; }
         public int Index { get; set; }
         public virtual IList<Task> Tasks { get; set; }
+        [JsonIgnore]
         public virtual Board Board { get; set; }
     }
 }

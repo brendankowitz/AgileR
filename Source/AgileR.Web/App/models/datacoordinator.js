@@ -24,7 +24,6 @@ define(["urlBuilder", "models/board"], function (navigation, boardModel) {
     });
 
     taskChannel.subscribe("load.board.request", function (boardId) {
-
         var findBoard = function() {
             $.each(internalBoards(), function(i, type) {
                 if (boardId === type.slug()) {
@@ -40,70 +39,66 @@ define(["urlBuilder", "models/board"], function (navigation, boardModel) {
                 findBoard();
             }).once();
             channel.publish("load.boards.request");
-        }
+        }     
+    });
 
-        /*
-        //var boardJs = {
-        //    id: boardId || 1,
-        //    title: "Board 1",
-        //    columns: [
-        //        {
-        //            id: "1",
-        //            title: "Todo",
-        //            index: 0,
-        //            tasks: [
-        //                {
-        //                    id: "1",
-        //                    title: "Task1",
-        //                    description: "Hello",
-        //                    index: 0
-        //                },
-        //                {
-        //                    id: "2",
-        //                    title: "Another",
-        //                    description: "Hello",
-        //                    index: 1
-        //                }
-        //            ]
-        //        },
-        //        {
-        //            id: "2",
-        //            title: "Doing",
-        //            index: 1,
-        //            tasks: []
-        //        },
-        //        {
-        //            id: "3",
-        //            title: "Done",
-        //            index: 2,
-        //            tasks: [
-        //                {
-        //                    id: "3",
-        //                    title: "I'm done",
-        //                    description: "Hello",
-        //                    index: 1
-        //                }
-        //            ]
-        //        }
-        //    ]
-        //};
-
-        //var board = new boardModel(boardJs);
-        */
-        
+    taskChannel.subscribe("add.board.request", function (obj) {
+        internalBoards.push(obj.entity);
     });
 
     taskChannel.subscribe("insert.board.request", function(obj) {
-        manager.addEntity(obj.entity);
-        manager.saveChanges().then(function() {
-            internalBoards.push(obj.entity);
+        $.ajax({
+            url: url("create"),
+            dataType: 'json',
+            type: "POST",
+            accept: 'application/json',
+            contentType: 'application/json',
+            data: obj.entity.asJSON()
+        }).success(function (d) {
+            obj.entity.id(d.Id);
+            taskChannel.publish("add.board.request", obj);
+            taskChannel.publish("notification", { message: obj.entity.title() + " saved." });
         }).fail(function() {
-            var toastr = require("toastr");
-            toastr.error("Failed to save board :(");
+            taskChannel.publish("notification.error", { message: "Failed to save board :(" });
+        });
+    });
+    
+    taskChannel.subscribe("insert.column.request", function (obj) {
+        $.ajax({
+            url: url("createcolumn", "?boardId=" + obj.boardId),
+            dataType: 'json',
+            type: "POST",
+            accept: 'application/json',
+            contentType: 'application/json',
+            data: obj.entity.asJSON()
+        }).success(function (d) {
+            obj.entity.id(d.Id);
+            taskChannel.publish("add.column.request", obj);
+            taskChannel.publish("notification", { message: obj.entity.title() + " saved." });
+        }).fail(function () {
+            taskChannel.publish("notification.error", { message: "Failed to save column :(" });
+        });
+    });
+    
+    taskChannel.subscribe("insert.task.request", function (obj) {
+        $.ajax({
+            url: url("createtask", "?columnId=" + obj.columnId),
+            dataType: 'json',
+            type: "POST",
+            accept: 'application/json',
+            contentType: 'application/json',
+            data: obj.entity.asJSON()
+        }).success(function (d) {
+            obj.entity.id(d.Id);
+            taskChannel.publish("add.task.request", obj);
+            taskChannel.publish("notification", { message: obj.entity.title() + " saved." });
+        }).fail(function () {
+            taskChannel.publish("notification.error", { message: "Failed to save task :(" });
         });
     });
 
     var data = {
+        boards: internalBoards
     };
 
     return data;

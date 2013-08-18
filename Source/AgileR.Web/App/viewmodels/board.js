@@ -4,6 +4,7 @@
 
     var view = function () {
         var context = this;
+        this.board = null;
         this.displayName = ko.observable("Untitled");
         this.columns = ko.observableArray([]);
 
@@ -12,7 +13,12 @@
                 title: "New task",
                 description: "Hello"
             });
-            context.columns()[0].tasks.push(model);
+            
+            channel.publish("insert.task.request", {
+                columnId: context.columns()[0].id(),
+                entity: model
+            });
+            
             return false;
         };
         
@@ -20,7 +26,12 @@
             var model = taskListModel({
                 title: "untitled"
             });
-            context.columns.push(model);
+            
+            channel.publish("insert.column.request", {
+                boardId: context.board.id(),
+                entity: model
+            });
+
             return false;
         };
 
@@ -38,11 +49,17 @@
         };
 
         channel.subscribe("load.board.response", function (data) {
+            context.board = data;
             context.displayName = data.title;
             context.columns = data.columns || ko.observableArray([]);
             if (context.columns().length == 0) {
                 var newColumn = taskListModel();
-                context.columns.push(newColumn);
+                
+                channel.publish("insert.column.request", {
+                    boardId: context.board.id(),
+                    entity: newColumn
+                });
+
             }
         }).once();
 
@@ -53,7 +70,6 @@
 
     view.prototype.viewAttached = function (el) {
         //you can get the view after it's bound and connected to it's parent dom node if you want
-        $("#agile-columns .column .cards");
 
     };
 
