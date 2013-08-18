@@ -1,19 +1,18 @@
-﻿define(["models/tasklist"], function(taskListModel) {
+﻿define(["models/tasklist", "models/guid"], function (taskListModel, guid) {
 
     var board = function (from) {
         var context = this;
-        this.id = from.id,
-        this.title = ko.observable(from.title);
+        this.id = ko.observable(from.Id || from.id),
+        this.title = ko.observable(from.Title || from.title);
+        this.slug = ko.observable(from.Slug || from.slug || guid());
         this.columns = ko.observableArray([]);
-        
-        if (!!from.columns) {
-            $.each(from.columns, function(i, type) {
-                var column = new taskListModel(type);
-                context.columns.push(column);
-            });
-        }
+
+        $.each(from.Columns || from.columns || [], function (i, type) {
+            var column = new taskListModel(type);
+            context.columns.push(column);
+        });
     };
 
-    return board;
+    return function (initial) { return new board(initial || {}); };
 
 });

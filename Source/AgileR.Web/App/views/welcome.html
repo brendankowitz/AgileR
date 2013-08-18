@@ -1,11 +1,20 @@
 ﻿<div class="container-fluid">
     <div class="row-fluid">
         <h2>Task boards</h2>
-        
-        <ul>
-            <li><a href="#/board/1">Task board 1</a></li>
-        </ul>
-        
 
+        <ul data-bind="foreach: boards">
+            <li><a href="#" data-bind="text: title, attr: { href: '#/board/' + slug() }"></a></li>
+        </ul>
+
+        <form data-bind="submit: createNewBoard">
+            <fieldset>
+                <legend>Create a new board</legend>
+                <label>Board name</label>
+                <input type="text" placeholder="Type something…" data-bind="value: newBoard.title">
+                <span class="help-block">The name of your new board.</span>
+                
+                <button type="submit" class="btn">Submit</button>
+            </fieldset>
+        </form>
     </div>
 </div>
