@@ -1,10 +1,17 @@
 define(["urlBuilder", "models/board"], function (navigation, boardModel) {
 
     var taskChannel = postal.channel();
+    var privateChannel = postal.channel("private");
     var url = navigation.urlBuilder("Board");
     var internalBoards = ko.observableArray([]);
 
     taskChannel.subscribe("load.boards.request", function () {
+
+        if (internalBoards().length > 0) {
+            taskChannel.publish("load.boards.response", internalBoards);
+            return;
+        }
+
         $.ajax({
             url: url("boards"),
             dataType: 'json',
@@ -19,7 +26,7 @@ define(["urlBuilder", "models/board"], function (navigation, boardModel) {
             });
             taskChannel.publish("load.boards.response", internalBoards);
         }).fail(function () {
-            toastr.error("Boards could not be loaded.");
+            taskChannel.publish("notification.error", { message: "Boards could not be loaded." });
         });
     });
 
@@ -95,6 +102,18 @@ define(["urlBuilder", "models/board"], function (navigation, boardModel) {
         }).fail(function () {
             taskChannel.publish("notification.error", { message: "Failed to save task :(" });
         });
+    });
+
+    privateChannel.subscribe("modify.column.property.*", function (d, envelope) {
+        var properties = envelope.topic.split('.');
+        $.ajax({
+            url: url("UpdateColumnProperty", d.id),
+            dataType: 'json',
+            type: "PUT",
+            accept: 'application/json',
+            contentType: 'application/json',
+            data: JSON.stringify({ newValue: d.newValue, property: properties[properties.length-1] })
+        }); 
     });
 
     var data = {

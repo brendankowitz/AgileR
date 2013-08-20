@@ -1,8 +1,11 @@
 define(["models/task", "models/guid"], function (taskModel, guid) {
 
+    var thisInstance = guid();
+
     var tasklist = function (obj) {
         var context = this;
         this.channel = postal.channel();
+        this.privateChannel = postal.channel("private");
         this.id = ko.observable(obj.Id || obj.id || guid()),
         this.title = ko.observable(obj.Title || obj.title || "untitled");
         this.tasks = ko.observableArray([]);
@@ -18,7 +21,7 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
                 return data.taskId == item.id();
             });
             if (removed.length > 0) {
-                channel.publish("add.task.request", { columnId: data.toColumnId, entity: removed[0] });
+                context.channel.publish("add.task.request", { columnId: data.toColumnId, entity: removed[0] });
             }
         });
 
@@ -27,6 +30,24 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
                 context.tasks.push(data.entity);
             }
         });
+
+        var isUpdating = false;
+        var setProperty = function (name, value) {
+            isUpdating = true;
+            context[name](value);
+            isUpdating = false;
+        };
+
+        this.channel.subscribe("modify.column.property.*", function (data, envelope) {
+            var properties = envelope.topic.split('.');
+            setProperty(properties[properties - 1], data.newValue);
+        });
+
+        this.title.subscribe(function (newValue) {
+            if (isUpdating) return;
+            context.privateChannel.publish("modify.column.property.title", { id: context.id(), newValue: newValue, sender: thisInstance });
+        });
+
     };
     
     tasklist.prototype.asJSON = function () {

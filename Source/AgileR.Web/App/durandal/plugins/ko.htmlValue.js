@@ -1,7 +1,7 @@
 ﻿define(function () {
     ko.bindingHandlers.htmlValue = {
         init: function (element, valueAccessor, allBindingsAccessor) {
-            ko.utils.registerEventHandler(element, "keydown", function () {
+            ko.utils.registerEventHandler(element, "keyup", function () {
                 var modelValue = valueAccessor();
                 var elementValue = element.innerHTML;
                 if (ko.isWriteableObservable(modelValue)) {

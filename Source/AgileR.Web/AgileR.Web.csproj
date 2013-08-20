@@ -157,6 +157,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\durandal\plugins\ko.htmlValue.js" />
     <Content Include="App\durandal\plugins\ko.drop.js" />
     <Content Include="App\urlBuilder.js" />
     <Content Include="App\durandal\plugins\ko.draggable.js" />
@@ -197,6 +198,8 @@
     <Compile Include="Intrastructure\Modules\DatabaseModule.cs" />
     <Compile Include="Intrastructure\Modules\SignalingModule.cs" />
     <Compile Include="Intrastructure\Modules\WebModule.cs" />
+    <Compile Include="Intrastructure\Signaling\TaskBoardHub.cs" />
+    <Compile Include="Models\ModelPropertyUpdate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -439,7 +442,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Intrastructure\Extensions\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

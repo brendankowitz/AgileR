@@ -3,7 +3,7 @@
         
         <!-- ko foreach: columns -->
         <div class="span3 well column" data-bind="attr: { 'data-id': id() }">
-            <h2 contenteditable="true" data-bind="text: title"></h2>
+            <h2 contenteditable="true" data-bind="htmlValue: title"></h2>
             
             <div class="cards" data-bind="foreach: tasks, drop: {}">
                 <div class="well alert alert-info draggable" data-bind="text: title, attr: { 'data-id': id() }, drag: {}"></div>

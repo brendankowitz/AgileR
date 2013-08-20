@@ -1,9 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Reflection;
+using System.Threading.Tasks;
 using System.Web.Http;
 using AgileR.Web.Intrastructure.Data;
 using AgileR.Web.Intrastructure.Entities;
+using AgileR.Web.Models;
+using Task = AgileR.Web.Intrastructure.Entities.Task;
+using Newtonsoft.Json;
 
 namespace AgileR.Web.Controllers
 {
@@ -76,6 +82,18 @@ namespace AgileR.Web.Controllers
             var entity = _context.Set<Column>().Single(x => x.Id == update.Id);
             entity.Title = update.Title;
             entity.Index = update.Index;
+            _context.Save();
+            return entity;
+        }
+
+        [HttpPut, ActionName("UpdateColumnProperty")]
+        public Column UpdateColumnProperty(int id, ModelPropertyUpdate update)
+        {
+            var entity = _context.Set<Column>().Single(x => x.Id == id);
+
+            var type = typeof(Column).GetProperty(update.Property, BindingFlags.IgnoreCase | BindingFlags.Instance | BindingFlags.Public);
+            type.SetValue(entity, Convert.ChangeType(update.NewValue, type.PropertyType));
+
             _context.Save();
             return entity;
         }
