@@ -39,8 +39,10 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
         };
 
         this.channel.subscribe("modify.column.property.*", function (data, envelope) {
-            var properties = envelope.topic.split('.');
-            setProperty(properties[properties - 1], data.newValue);
+            if (data.id == context.id()) {
+                var properties = envelope.topic.split('.');
+                setProperty(properties[properties.length - 1], data.newValue);
+            }
         });
 
         this.title.subscribe(function (newValue) {
