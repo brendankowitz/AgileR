@@ -15,6 +15,11 @@
             this.title = config.title || MessageBox.defaultTitle;
             this.options = config.options || MessageBox.defaultOptions;
         }
+        
+    };
+
+    MessageBox.prototype.viewAttached = function (el) {
+        //$(el).modal({ show: true });
     };
 
     MessageBox.defaultTitle = 'Application';

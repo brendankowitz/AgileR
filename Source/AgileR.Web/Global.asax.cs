@@ -8,6 +8,7 @@ using System.Web.Routing;
 using Autofac;
 using Autofac.Integration.Mvc;
 using Autofac.Integration.WebApi;
+using Microsoft.AspNet.SignalR;
 
 namespace AgileR.Web
 {
@@ -18,6 +19,8 @@ namespace AgileR.Web
     {
         protected void Application_Start()
         {
+            GlobalHost.DependencyResolver.UseRedis("127.0.0.1", 6379, string.Empty, "AgileR");
+
             RouteTable.Routes.MapHubs();
 
             AreaRegistration.RegisterAllAreas();

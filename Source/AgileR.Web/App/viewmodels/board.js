@@ -1,4 +1,5 @@
-﻿define(["models/tasklist", "models/task", "durandal/plugins/ko.draggable", "durandal/plugins/ko.drop", "durandal/plugins/ko.htmlValue"], function (taskListModel, taskModel) {
+﻿define(["models/tasklist", "models/task", "durandal/modalBootstrapDialog", "durandal/editTask", "durandal/plugins/ko.draggable",
+            "durandal/plugins/ko.drop", "durandal/plugins/ko.htmlValue"], function (taskListModel, taskModel, messageBox, editTask) {
 
     var channel = postal.channel();
 
@@ -7,6 +8,7 @@
         this.board = null;
         this.displayName = ko.observable("Untitled");
         this.columns = ko.observableArray([]);
+        this.editMessageBox = messageBox;
 
         this.createTask = function () {
             var model = taskModel({
@@ -70,6 +72,14 @@
 
     view.prototype.viewAttached = function (el) {
         //you can get the view after it's bound and connected to it's parent dom node if you want
+        var v = this;
+        $(el).on("click", ".draggable", function() {
+            var item = $(this).closest(".draggable");
+            v.editMessageBox.show("./editTask", {
+                title: "Edit task",
+                task: ko.dataFor(item[0])
+            });
+        });
 
     };
 

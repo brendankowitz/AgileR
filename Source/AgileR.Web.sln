@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.Web", "AgileR.Web\AgileR.Web.csproj", "{6515802D-ADA7-4EA6-8E7E-988A360EECBA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.Core", "AgileR.Core\AgileR.Core.csproj", "{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.Excel", "AgileR.Excel\AgileR.Excel.csproj", "{DEE73848-3F86-4D61-A145-53B52C0B3831}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{6515802D-ADA7-4EA6-8E7E-988A360EECBA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6515802D-ADA7-4EA6-8E7E-988A360EECBA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6515802D-ADA7-4EA6-8E7E-988A360EECBA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEE73848-3F86-4D61-A145-53B52C0B3831}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEE73848-3F86-4D61-A145-53B52C0B3831}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEE73848-3F86-4D61-A145-53B52C0B3831}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEE73848-3F86-4D61-A145-53B52C0B3831}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

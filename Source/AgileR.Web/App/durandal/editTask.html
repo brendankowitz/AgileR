@@ -1,0 +1,16 @@
+﻿<div class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Edit task</h3>
+    </div>
+    <div class="modal-body">
+        <label>
+            Title
+            <textarea data-bind="value: task.title, valueUpdate: 'afterkeydown'" rows="3" placeholder="Type something…" style="width: 95%"></textarea>
+        </label>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-danger" data-dismiss="modal" data-bind="click: deleteTask" aria-hidden="true">Delete</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    </div>
+</div>

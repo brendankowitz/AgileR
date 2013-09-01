@@ -1,6 +1,6 @@
 ﻿define(function () {
     var channel = postal.channel();
-    
+
     ko.bindingHandlers.drop = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel) {
             var dragElement = $(element);
@@ -12,9 +12,7 @@
                     var dropped = ui.draggable;
                     var droppedOn = $(this);
                     $(dropped).detach();
-
                     channel.publish("move.task.request", { taskId: $(dropped).data("id"), toColumnId: droppedOn.closest(".column").data("id") });
-                    channel.publish("notification", { message: "'" + $(dropped).text() + "' moved to '" + droppedOn.parents(".column").find("h2").text() + "'" });
                 },
                 over: function(event, elem) {
                     $(this).closest(".column").addClass("over");

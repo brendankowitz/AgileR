@@ -5,10 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Web.Http;
+using AgileR.Core.Entities;
 using AgileR.Web.Intrastructure.Data;
-using AgileR.Web.Intrastructure.Entities;
 using AgileR.Web.Models;
-using Task = AgileR.Web.Intrastructure.Entities.Task;
 using Newtonsoft.Json;
 
 namespace AgileR.Web.Controllers
@@ -59,7 +58,7 @@ namespace AgileR.Web.Controllers
         }
 
         [HttpPost, ActionName("CreateTask")]
-        public Task Create(int columnId, Task task)
+        public AgileR.Core.Entities.Task Create(int columnId, AgileR.Core.Entities.Task task)
         {
             var column = _context.Set<Column>().Single(x => x.Id == columnId);
             column.Tasks.Add(task);
@@ -99,9 +98,9 @@ namespace AgileR.Web.Controllers
         }
 
         [HttpPut, ActionName("UpdateTask")]
-        public Task Update(Task update)
+        public AgileR.Core.Entities.Task Update(AgileR.Core.Entities.Task update)
         {
-            var entity = _context.Set<Task>().Single(x => x.Id == update.Id);
+            var entity = _context.Set<AgileR.Core.Entities.Task>().Single(x => x.Id == update.Id);
             entity.Title = update.Title;
             entity.Description = update.Description;
             entity.Index = update.Index;

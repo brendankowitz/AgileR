@@ -17,17 +17,27 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
         });
 
         this.channel.subscribe("move.task.request", function (data) {
+            if (data.toColumnId == context.id()) return;
             var removed = context.tasks.remove(function (item) {
                 return data.taskId == item.id();
             });
             if (removed.length > 0) {
-                context.channel.publish("add.task.request", { columnId: data.toColumnId, entity: removed[0] });
+                context.channel.publish("add.task.request", { columnId: data.toColumnId, entity: removed[0], removedFrom: context });
             }
+        });
+        
+        this.channel.subscribe("delete.task.request", function (data) {
+            context.tasks.remove(function (item) {
+                return data.taskId == item.id();
+            });
         });
 
         this.channel.subscribe("add.task.request", function (data) {
             if (data.columnId == context.id()) {
                 context.tasks.push(data.entity);
+                if (!!data.removedFrom) {
+                    context.channel.publish("notification", { message: "'" + data.entity.title() + "' moved to '" + context.title() + "'" });
+                }
             }
         });
 

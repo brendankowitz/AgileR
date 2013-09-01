@@ -48,6 +48,9 @@
     <Reference Include="Autofac.Integration.WebApi">
       <HintPath>..\packages\Autofac.WebApi.3.1.0\lib\net40\Autofac.Integration.WebApi.dll</HintPath>
     </Reference>
+    <Reference Include="BookSleeve">
+      <HintPath>..\packages\BookSleeve.1.3.38\lib\BookSleeve.dll</HintPath>
+    </Reference>
     <Reference Include="dotless.Core">
       <HintPath>..\packages\dotless.1.3.1.0\lib\dotless.Core.dll</HintPath>
     </Reference>
@@ -56,6 +59,10 @@
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.Owin">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.1.3\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Redis, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Redis.1.1.3\lib\net40\Microsoft.AspNet.SignalR.Redis.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.1.1.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
@@ -172,6 +179,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\durandal\editTask.html" />
+    <Content Include="App\durandal\editTask.js" />
+    <Content Include="App\durandal\modalBootstrapDialog.js" />
     <Content Include="App\durandal\plugins\ko.htmlValue.js" />
     <Content Include="App\durandal\plugins\ko.drop.js" />
     <Content Include="App\urlBuilder.js" />
@@ -207,9 +217,6 @@
     <Compile Include="Intrastructure\Data\DataContext.cs" />
     <Compile Include="Intrastructure\Data\DataContextCreator.cs" />
     <Compile Include="Intrastructure\Data\DataContextMigrator.cs" />
-    <Compile Include="Intrastructure\Entities\Board.cs" />
-    <Compile Include="Intrastructure\Entities\Column.cs" />
-    <Compile Include="Intrastructure\Entities\Task.cs" />
     <Compile Include="Intrastructure\Filters\TransactionFilter.cs" />
     <Compile Include="Intrastructure\Modules\DatabaseModule.cs" />
     <Compile Include="Intrastructure\Modules\SignalingModule.cs" />
@@ -466,6 +473,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AgileR.Core\AgileR.Core.csproj">
+      <Project>{676f804f-6ff5-4a7d-9fd5-8b6cf2815fb1}</Project>
+      <Name>AgileR.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

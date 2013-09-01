@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AgileR.Web.Intrastructure.Entities
+namespace AgileR.Core.Entities
 {
     public class Board
     {
