@@ -17,7 +17,6 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
         });
 
         this.channel.subscribe("move.task.request", function (data) {
-            if (data.toColumnId == context.id()) return;
             var removed = context.tasks.remove(function (item) {
                 return data.taskId == item.id();
             });
@@ -35,7 +34,7 @@ define(["models/task", "models/guid"], function (taskModel, guid) {
         this.channel.subscribe("add.task.request", function (data) {
             if (data.columnId == context.id()) {
                 context.tasks.push(data.entity);
-                if (!!data.removedFrom) {
+                if (!!data.removedFrom && data.columnId != data.removedFrom.id()) {
                     context.channel.publish("notification", { message: "'" + data.entity.title() + "' moved to '" + context.title() + "'" });
                 }
             }

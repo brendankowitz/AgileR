@@ -170,13 +170,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Scripts\jquery-1.6.4-vsdoc.js" />
-    <Content Include="Scripts\jquery-1.6.4.js" />
-    <Content Include="Scripts\jquery-1.6.4.min.js" />
-    <Content Include="Scripts\jquery.signalR-1.1.3.js" />
-    <Content Include="Scripts\jquery.signalR-1.1.3.min.js" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AgileR.Core\AgileR.Core.csproj">
       <Project>{676f804f-6ff5-4a7d-9fd5-8b6cf2815fb1}</Project>
       <Name>AgileR.Core</Name>

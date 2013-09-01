@@ -13,6 +13,9 @@ namespace AgileR.ExcelApp
     public class AgilityClient : IDisposable
     {
         readonly List<Action<int, string, string>> _columnPropertyModified = new List<Action<int, string, string>>();
+        readonly List<Action<int, string, string>> _taskPropertyModified = new List<Action<int, string, string>>();
+        readonly List<Action<int, int>> _taskMoved = new List<Action<int, int>>();
+
         private readonly HubConnection _hubConnection;
         private readonly IHubProxy _hubProxy;
         private readonly string _host;
@@ -27,6 +30,8 @@ namespace AgileR.ExcelApp
         public async Task Start()
         {
             _hubProxy.On<int, string, string>("ColumnPropertyModified", ColumnPropertyModified);
+            _hubProxy.On<int, string, string>("TaskPropertyModified", TaskPropertyModified);
+            _hubProxy.On<int, int>("TaskMoved", TaskMoved);
 
             await _hubConnection.Start();
         }
@@ -57,6 +62,36 @@ namespace AgileR.ExcelApp
         public void RegisterColumnPropertyModified(Action<int, string, string> action)
         {
             _columnPropertyModified.Add(action);
+        }
+
+        private void TaskPropertyModified(int columnId, string propertyId, string newValue)
+        {
+            _taskPropertyModified.ForEach(x => x(columnId, propertyId, newValue));
+        }
+
+        public void SendTaskPropertyModified(int columnId, string propertyName, string newValue)
+        {
+            _hubProxy.Invoke("TaskPropertyModified", columnId, propertyName, newValue);
+        }
+
+        public void RegisterTaskPropertyModified(Action<int, string, string> action)
+        {
+            _taskPropertyModified.Add(action);
+        }
+
+        private void TaskMoved(int taskId, int toColumnId)
+        {
+            _taskMoved.ForEach(x => x(taskId, toColumnId));
+        }
+
+        public void SendTaskPropertyModified(int taskId, int toColumnId)
+        {
+            _hubProxy.Invoke("TaskMoved", taskId, toColumnId);
+        }
+
+        public void RegisterTaskMoved(Action<int,int> action)
+        {
+            _taskMoved.Add(action);
         }
 
         public void Dispose()

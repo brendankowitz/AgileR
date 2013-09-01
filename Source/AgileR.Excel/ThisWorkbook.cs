@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using System.Threading.Tasks;
 using AgileR.Core.Entities;
 using Microsoft.Office.Interop.Excel;
+using Action = System.Action;
+using Task = System.Threading.Tasks.Task;
 
 namespace AgileR.ExcelApp
 {
@@ -12,15 +14,31 @@ namespace AgileR.ExcelApp
         private AgilityClient _client;
         private int _rowNum;
         List<Board> Boards { get; set; }
+        private bool _isUpdating;
 
         private async void ThisWorkbook_Startup(object sender, System.EventArgs e)
         {
             _client = new AgilityClient("http://localhost:50596/");
 
+            var sheet = (Worksheet)ActiveSheet;
+            await RefreshBoard();
+
+            _client.RegisterColumnPropertyModified((columnId, property, newValue) => PerformUpdate(() => UpdateColumnProperty(property, _rowNum, sheet, columnId, newValue)));
+            _client.RegisterTaskPropertyModified((columnId, property, newValue) => PerformUpdate(() => UpdateTaskProperty(property, _rowNum, sheet, columnId, newValue)));
+            _client.RegisterTaskMoved((taskId, columnId) => PerformUpdate(() => UpdateTaskMoved(_rowNum, sheet, taskId, columnId)));
+
+            await _client.Start();
+
+            Application.SheetChange += OnSheetChange;
+
+        }
+
+        private async Task<Board> RefreshBoard()
+        {
             Boards = (await _client.Boards()).ToList();
             var board = Boards.First();
 
-            var sheet = Sheets.OfType<Worksheet>().First();
+            var sheet = (Worksheet)ActiveSheet;
             sheet.Name = board.Title;
 
             sheet.Cells[1, 1] = "Column Id";
@@ -32,16 +50,15 @@ namespace AgileR.ExcelApp
             _rowNum = 2;
             _rowNum = RenderCells(board, sheet, _rowNum);
 
-            _client.RegisterColumnPropertyModified((columnId, property, newValue) => UpdateColumnProperty(property, _rowNum, sheet, columnId, newValue));
-
-            await _client.Start();
-
-            Application.SheetChange += OnSheetChange;
-
+            return board;
         }
 
         private void OnSheetChange(object sh, Range target)
         {
+            Application.SheetChange -= OnSheetChange;
+            Application.SheetChange += OnSheetChange;
+
+            if (_isUpdating) return;
             if (target.Column == 2)
             {
                 var colId = ((Range) ((Worksheet) ActiveSheet).Cells[target.Row, 1]).Value2;
@@ -50,15 +67,30 @@ namespace AgileR.ExcelApp
                     int columnId = Convert.ToInt32(colId);
                     string newValue = target.Value2.ToString();
                     _client.SendColumnPropertyModified(columnId, "title", newValue);
-                    UpdateColumnProperty("title", _rowNum, (Worksheet) ActiveSheet, columnId, newValue);
+                    PerformUpdate(() => UpdateColumnProperty("title", _rowNum, (Worksheet) ActiveSheet, columnId, newValue));
                 }
             }
-
-            ((Microsoft.Office.Interop.Excel.Application)this.Application).SheetChange -= OnSheetChange;
-            ((Microsoft.Office.Interop.Excel.Application)this.Application).SheetChange += OnSheetChange;
+            else if (target.Column == 4)
+            {
+                var taskIdObj = ((Range)((Worksheet)ActiveSheet).Cells[target.Row, 3]).Value2;
+                if (taskIdObj != null)
+                {
+                    int taskId = Convert.ToInt32(taskIdObj);
+                    string newValue = target.Value2.ToString();
+                    _client.SendTaskPropertyModified(taskId, "title", newValue);
+                    PerformUpdate(() => UpdateTaskProperty("title", _rowNum, (Worksheet)ActiveSheet, taskId, newValue));
+                }
+            }
         }
 
-        private static void UpdateColumnProperty(string property, int maxRows, Worksheet sheet, int columnId, string newValue)
+        private async void PerformUpdate(Func<Task> action)
+        {
+            _isUpdating = true;
+            await action();
+            _isUpdating = false;
+        }
+
+        private static Task UpdateColumnProperty(string property, int maxRows, Worksheet sheet, int columnId, string newValue)
         {
             if (string.Equals("title", property, StringComparison.InvariantCultureIgnoreCase))
             {
@@ -72,6 +104,43 @@ namespace AgileR.ExcelApp
                     }
                 }
             }
+            return Task.FromResult(true);
+        }
+
+        private Task UpdateTaskProperty(string property, int maxRows, Worksheet sheet, int columnId, string newValue)
+        {
+            if (string.Equals("title", property, StringComparison.InvariantCultureIgnoreCase))
+            {
+                for (int i = 1; i < maxRows; i++)
+                {
+                    var rowColId = sheet.Cells[i, 3] as Range;
+                    dynamic value2 = rowColId.Value2;
+                    if (value2 != null && value2.ToString() == columnId.ToString())
+                    {
+                        sheet.Cells[i, 4] = newValue;
+                    }
+                }
+            }
+            return Task.FromResult(true);
+        }
+
+        private async Task UpdateTaskMoved(int maxRows, Worksheet sheet, int taskId, int columnId)
+        {
+            for (int i = 1; i < maxRows; i++)
+            {
+                var rowTaskId = sheet.Cells[i, 3] as Range;
+                dynamic value2 = rowTaskId.Value2;
+                if (value2 != null && value2.ToString() == taskId.ToString())
+                {
+                    sheet.Cells[i, 1] = columnId;
+                    var lookup = Boards.First().Columns.First(x => x.Id == columnId);
+                    sheet.Cells[i, 2] = lookup.Title;
+                }
+            }
+            try
+            {
+                ((PivotTable) sheet.PivotTables("PivotTable1")).RefreshTable();
+            }catch{ /* its a demo ;) */ }
         }
 
         private static int RenderCells(Board board, Worksheet sheet, int rowNum)
