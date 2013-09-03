@@ -6,11 +6,11 @@ using System.Security;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AgileR.Excel")]
+[assembly: AssemblyTitle("AgileR.ExcelApp")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("AgileR.Excel")]
+[assembly: AssemblyProduct("AgileR.ExcelApp")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Security;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("aba3ce4a-937d-4df8-b392-de2a37321aa9")]
+[assembly: Guid("18534c6a-133a-4cd6-8d59-558d0ba5aeea")]
 
 // Version information for an assembly consists of the following four values:
 //

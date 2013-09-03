@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Threading.Tasks;
 using AgileR.Core.Entities;
 using Microsoft.AspNet.SignalR.Client.Hubs;
-using Task = System.Threading.Tasks.Task;
-using System.Net;
 using Newtonsoft.Json;
+using Task = System.Threading.Tasks.Task;
 
 namespace AgileR.ExcelApp
 {
-    public class AgilityClient : IDisposable
+    public class AgilityClient
     {
-        readonly List<Action<int, string, string>> _columnPropertyModified = new List<Action<int, string, string>>();
         readonly List<Action<int, string, string>> _taskPropertyModified = new List<Action<int, string, string>>();
+        readonly List<Action<int, string, string>> _columnPropertyModified = new List<Action<int, string, string>>();
         readonly List<Action<int, int>> _taskMoved = new List<Action<int, int>>();
+         
 
         private readonly HubConnection _hubConnection;
         private readonly IHubProxy _hubProxy;
@@ -29,9 +30,12 @@ namespace AgileR.ExcelApp
 
         public async Task Start()
         {
-            _hubProxy.On<int, string, string>("ColumnPropertyModified", ColumnPropertyModified);
             _hubProxy.On<int, string, string>("TaskPropertyModified", TaskPropertyModified);
+
+            
+            _hubProxy.On<int, string, string>("ColumnPropertyModified", ColumnPropertyModified);
             _hubProxy.On<int, int>("TaskMoved", TaskMoved);
+            
 
             await _hubConnection.Start();
         }
@@ -41,7 +45,7 @@ namespace AgileR.ExcelApp
             var request = (HttpWebRequest)WebRequest.Create(string.Format("{0}api/board/boards", _host));
             request.Accept = "application/json";
 
-            using(var resp = await request.GetResponseAsync())
+            using (var resp = await request.GetResponseAsync())
             using (var response = new StreamReader(resp.GetResponseStream()))
             {
                 var content = await response.ReadToEndAsync();
@@ -49,6 +53,29 @@ namespace AgileR.ExcelApp
             }
         }
 
+        private void TaskPropertyModified(int taskId, string propertyName, string newValue)
+        {
+            _taskPropertyModified.ForEach(x => x(taskId, propertyName, newValue));
+        }
+
+        public void SendTaskPropertyModified(int taskId, string propertyName, string newValue)
+        {
+            _hubProxy.Invoke("TaskPropertyModified", taskId, propertyName, newValue);
+        }
+
+        public void RegisterTaskPropertyModified(Action<int, string, string> action)
+        {
+            _taskPropertyModified.Add(action);
+        }
+
+        public void Dispose()
+        {
+            if (_hubConnection != null)
+                _hubConnection.Stop();
+        }
+
+
+        
         private void ColumnPropertyModified(int columnId, string propertyId, string newValue)
         {
             _columnPropertyModified.ForEach(x => x(columnId, propertyId, newValue));
@@ -64,21 +91,6 @@ namespace AgileR.ExcelApp
             _columnPropertyModified.Add(action);
         }
 
-        private void TaskPropertyModified(int columnId, string propertyId, string newValue)
-        {
-            _taskPropertyModified.ForEach(x => x(columnId, propertyId, newValue));
-        }
-
-        public void SendTaskPropertyModified(int columnId, string propertyName, string newValue)
-        {
-            _hubProxy.Invoke("TaskPropertyModified", columnId, propertyName, newValue);
-        }
-
-        public void RegisterTaskPropertyModified(Action<int, string, string> action)
-        {
-            _taskPropertyModified.Add(action);
-        }
-
         private void TaskMoved(int taskId, int toColumnId)
         {
             _taskMoved.ForEach(x => x(taskId, toColumnId));
@@ -89,15 +101,10 @@ namespace AgileR.ExcelApp
             _hubProxy.Invoke("TaskMoved", taskId, toColumnId);
         }
 
-        public void RegisterTaskMoved(Action<int,int> action)
+        public void RegisterTaskMoved(Action<int, int> action)
         {
             _taskMoved.Add(action);
         }
-
-        public void Dispose()
-        {
-            if (_hubConnection != null)
-                _hubConnection.Stop();
-        }
+        
     }
 }

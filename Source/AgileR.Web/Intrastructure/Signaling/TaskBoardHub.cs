@@ -3,6 +3,7 @@ using Microsoft.AspNet.SignalR;
 
 namespace AgileR.Web.Intrastructure.Signaling
 {
+    
     public class TaskBoardHub : Hub
     {
         public void BoardAdded(Board board)
@@ -25,9 +26,9 @@ namespace AgileR.Web.Intrastructure.Signaling
             Clients.Others.TaskMoving(taskId, x, y);
         }
 
-        public void TaskMoved(int toColumnId, int taskId)
+        public void TaskMoved(int taskId, int toColumnId)
         {
-            Clients.Others.TaskMoved(toColumnId, taskId);
+            Clients.Others.TaskMoved(taskId, toColumnId);
         }
 
         public void TaskRemoved(int taskId)

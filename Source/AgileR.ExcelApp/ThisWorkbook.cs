@@ -61,13 +61,13 @@ namespace AgileR.ExcelApp
             if (_isUpdating) return;
             if (target.Column == 2)
             {
-                var colId = ((Range) ((Worksheet) ActiveSheet).Cells[target.Row, 1]).Value2;
+                var colId = ((Range)((Worksheet)ActiveSheet).Cells[target.Row, 1]).Value2;
                 if (colId != null)
                 {
                     int columnId = Convert.ToInt32(colId);
                     string newValue = target.Value2.ToString();
                     _client.SendColumnPropertyModified(columnId, "title", newValue);
-                    PerformUpdate(() => UpdateColumnProperty("title", _rowNum, (Worksheet) ActiveSheet, columnId, newValue));
+                    PerformUpdate(() => UpdateColumnProperty("title", _rowNum, (Worksheet)ActiveSheet, columnId, newValue));
                 }
             }
             else if (target.Column == 4)
@@ -107,6 +107,28 @@ namespace AgileR.ExcelApp
             return Task.FromResult(true);
         }
 
+
+
+        private async Task UpdateTaskMoved(int maxRows, Worksheet sheet, int taskId, int columnId)
+        {
+            for (int i = 1; i < maxRows; i++)
+            {
+                var rowTaskId = sheet.Cells[i, 3] as Range;
+                dynamic value2 = rowTaskId.Value2;
+                if (value2 != null && value2.ToString() == taskId.ToString())
+                {
+                    sheet.Cells[i, 1] = columnId;
+                    var lookup = Boards.First().Columns.First(x => x.Id == columnId);
+                    sheet.Cells[i, 2] = lookup.Title;
+                }
+            }
+            try
+            {
+                ((PivotTable)sheet.PivotTables("PivotTable1")).RefreshTable();
+            }
+            catch { /* its a demo ;) */ }
+        }
+
         private Task UpdateTaskProperty(string property, int maxRows, Worksheet sheet, int columnId, string newValue)
         {
             if (string.Equals("title", property, StringComparison.InvariantCultureIgnoreCase))
@@ -124,25 +146,6 @@ namespace AgileR.ExcelApp
             return Task.FromResult(true);
         }
 
-        private async Task UpdateTaskMoved(int maxRows, Worksheet sheet, int taskId, int columnId)
-        {
-            for (int i = 1; i < maxRows; i++)
-            {
-                var rowTaskId = sheet.Cells[i, 3] as Range;
-                dynamic value2 = rowTaskId.Value2;
-                if (value2 != null && value2.ToString() == taskId.ToString())
-                {
-                    sheet.Cells[i, 1] = columnId;
-                    var lookup = Boards.First().Columns.First(x => x.Id == columnId);
-                    sheet.Cells[i, 2] = lookup.Title;
-                }
-            }
-            try
-            {
-                ((PivotTable) sheet.PivotTables("PivotTable1")).RefreshTable();
-            }catch{ /* its a demo ;) */ }
-        }
-
         private static int RenderCells(Board board, Worksheet sheet, int rowNum)
         {
             for (int i = 0; i < board.Columns.Count; i++)
@@ -155,7 +158,7 @@ namespace AgileR.ExcelApp
                     sheet.Cells[rowNum, 2] = column.Title;
                 }
 
-                for (var j = 0; j < column.Tasks.Count; j ++)
+                for (var j = 0; j < column.Tasks.Count; j++)
                 {
                     var task = column.Tasks[j];
                     sheet.Cells[rowNum, 1] = column.Id;
@@ -189,6 +192,7 @@ namespace AgileR.ExcelApp
         }
 
         #endregion
+
 
     }
 }

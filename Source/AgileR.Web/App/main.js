@@ -14,7 +14,7 @@ define("jquery", function () {
 });
 
 define(['durandal/app', 'durandal/system', 'durandal/viewLocator', 'durandal/plugins/router',
-        'durandal/widget', 'viewmodels/toastrEvents', 'models/datacoordinator', 'models/board', 'viewmodels/signalrEvents'],
+        'durandal/widget', 'viewmodels/toastrEvents', 'models/datacoordinator', 'models/board', 'viewmodels/signalrEvents' ],
   function (app, system, viewLocator, router, widget) {
 
       system.debug(true);

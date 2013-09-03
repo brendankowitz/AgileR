@@ -7,16 +7,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
-    <RootNamespace>AgileR.Excel</RootNamespace>
-    <AssemblyName>AgileR.Excel</AssemblyName>
-    <VSTO_HostDocumentName>AgileR.Excel.xlsx</VSTO_HostDocumentName>
+    <RootNamespace>AgileR.ExcelApp</RootNamespace>
+    <AssemblyName>AgileR.ExcelApp</AssemblyName>
+    <VSTO_HostDocumentName>AgileR.ExcelApp.xlsx</VSTO_HostDocumentName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <OfficeApplication>Excel</OfficeApplication>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
-    <ProjectGuid>{DEE73848-3F86-4D61-A145-53B52C0B3831}</ProjectGuid>
-    <SolutionID>56304ab6-89d9-457f-a1fd-9306fb088738</SolutionID>
+    <ProjectGuid>{F46CE4CB-394A-4007-B81A-1F1992695650}</ProjectGuid>
+    <SolutionID>f84f4a19-5a43-4b65-ae1f-fb1bc598f53b</SolutionID>
   </PropertyGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
@@ -57,27 +57,8 @@
     <Reference Include="Microsoft.AspNet.SignalR.Client">
       <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.1.1.3\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Core">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.1.1.3\lib\net40\Microsoft.AspNet.SignalR.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Owin.1.1.3\lib\net45\Microsoft.AspNet.SignalR.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.1.1.3\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Owin.Host.SystemWeb">
-      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.1.0.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin">
-      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -125,13 +106,13 @@
     <Compile Include="AgilityClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sheet1.cs">
-      <DependentUpon>AgileR.Excel.xlsx</DependentUpon>
+      <DependentUpon>AgileR.ExcelApp.xlsx</DependentUpon>
     </Compile>
     <Compile Include="Sheet1.Designer.cs">
       <DependentUpon>Sheet1.Designer.xml</DependentUpon>
     </Compile>
     <Compile Include="ThisWorkbook.cs">
-      <DependentUpon>AgileR.Excel.xlsx</DependentUpon>
+      <DependentUpon>AgileR.ExcelApp.xlsx</DependentUpon>
     </Compile>
     <Compile Include="ThisWorkbook.Designer.cs">
       <DependentUpon>ThisWorkbook.Designer.xml</DependentUpon>
@@ -145,9 +126,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="AgileR.Excel.xlsx" />
-    <None Include="AgileR.Excel_TemporaryKey.pfx" />
-    <None Include="app.config" />
+    <None Include="AgileR.ExcelApp.xlsx" />
+    <None Include="AgileR.ExcelApp_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -183,19 +163,19 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>AgileR.Excel_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>AgileR.ExcelApp_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>697408CB8AD1CC3191135A10F3D418B4F5C7AF6A</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>3A46F0E363A0DCC04D49312662CDF5EA3544CFF7</ManifestCertificateThumbprint>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\OfficeTools\Microsoft.VisualStudio.Tools.Office.targets" Condition="'$(VSToolsPath)' != ''" />
   <ProjectExtensions>
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
-        <ProjectProperties HostName="AgileR.Excel.xlsx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLS" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\Office15\Excel.exe" DebugInfoCommandLine="/x &quot;[$OUTPUT]AgileR.Excel.xlsx&quot;" />
-        <Host Name="Excel Document" Path=".\AgileR.Excel.xlsx" GeneratedCodeNamespace="AgileR.Excel">
-          <HostItem Name="Sheet1" Code="Sheet1.cs" CanonicalName="Sheet1" DisplayName="Configure" Blueprint="Sheet1.Designer.xml" GeneratedCode="Sheet1.Designer.cs" />
+        <ProjectProperties HostName="AgileR.ExcelApp.xlsx" HostPackage="{3F2B7691-D1D1-402F-9370-2704A737CF60}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="XLS" Language="CS" TemplatesPath="VSTOTemplates" DebugInfoExeName="C:\Program Files (x86)\Microsoft Office\Office15\Excel.exe" DebugInfoCommandLine="/x &quot;[$OUTPUT]AgileR.ExcelApp.xlsx&quot;" />
+        <Host Name="Excel Document" Path=".\AgileR.ExcelApp.xlsx" GeneratedCodeNamespace="AgileR.ExcelApp">
+          <HostItem Name="Sheet1" Code="Sheet1.cs" CanonicalName="Sheet1" DisplayName="Sheet1" Blueprint="Sheet1.Designer.xml" GeneratedCode="Sheet1.Designer.cs" />
           <HostItem Name="ThisWorkbook" Code="ThisWorkbook.cs" CanonicalName="ThisWorkbook" Blueprint="ThisWorkbook.Designer.xml" GeneratedCode="ThisWorkbook.Designer.cs" />
         </Host>
       </FlavorProperties>
