@@ -19,9 +19,7 @@ namespace AgileR.Web
     {
         protected void Application_Start()
         {
-            GlobalHost.DependencyResolver.UseRedis("127.0.0.1", 6379, string.Empty, "AgileR");
-
-            RouteTable.Routes.MapHubs();
+            //GlobalHost.DependencyResolver.UseRedis("127.0.0.1", 6379, string.Empty, "AgileR");
 
             AreaRegistration.RegisterAllAreas();
 

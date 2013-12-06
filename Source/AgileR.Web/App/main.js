@@ -27,7 +27,6 @@ define(['durandal/app', 'durandal/system', 'durandal/viewLocator', 'durandal/plu
           viewLocator.useConvention();
 
           app.adaptToDevice();
-          //widget.registerKind('tile');
 
           //configure routing
           router.useConvention();
