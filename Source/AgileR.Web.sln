@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secret Demo Code", "Secret Demo Code", "{F3AD21B9-A0E7-4D3D-AAA5-5523679873D6}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.Web", "AgileR.Web\AgileR.Web.csproj", "{6515802D-ADA7-4EA6-8E7E-988A360EECBA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.Core", "AgileR.Core\AgileR.Core.csproj", "{676F804F-6FF5-4A7D-9FD5-8B6CF2815FB1}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secret Demo Code", "Secret Demo Code", "{F3AD21B9-A0E7-4D3D-AAA5-5523679873D6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgileR.ExcelApp", "AgileR.ExcelApp\AgileR.ExcelApp.csproj", "{F46CE4CB-394A-4007-B81A-1F1992695650}"
 EndProject

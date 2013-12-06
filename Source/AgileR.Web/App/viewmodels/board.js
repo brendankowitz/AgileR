@@ -1,5 +1,5 @@
-﻿define(["models/tasklist", "models/task", "durandal/modalBootstrapDialog", "durandal/editTask", "durandal/plugins/ko.draggable",
-            "durandal/plugins/ko.drop", "durandal/plugins/ko.htmlValue"], function (taskListModel, taskModel, messageBox, editTask) {
+﻿define(["models/tasklist", "models/task", "durandal/modalBootstrapDialog", "durandal/editTask", "plugins/ko.draggable",
+            "plugins/ko.drop", "plugins/ko.htmlValue"], function (taskListModel, taskModel, messageBox, editTask) {
 
     var channel = postal.channel();
 
