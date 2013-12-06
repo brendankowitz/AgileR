@@ -1,13 +1,12 @@
-﻿define(['plugins/router', 'durandal/app'], function (router, app) {
+﻿define(['durandal/plugins/router', 'durandal/app'], function (router, app, exports) {
+
     return {
         router: router,
+        search: function () {
+        },
+        
         activate: function () {
-            router.map([
-                { route: '', title: 'Welcome', moduleId: 'viewmodels/welcome', nav: true },
-               
-            ]).buildNavigationModel();
-
-            return router.activate();
+            return router.activate('welcome');
         }
     };
 });

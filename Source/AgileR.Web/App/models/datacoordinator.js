@@ -1,4 +1,4 @@
-define(["durandal/urlBuilder", "models/board"], function (navigation, boardModel) {
+define(["urlBuilder", "models/board"], function (navigation, boardModel) {
 
     var taskChannel = postal.channel();
     var privateChannel = postal.channel("private");
