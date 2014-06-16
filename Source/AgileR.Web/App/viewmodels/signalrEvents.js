@@ -4,16 +4,18 @@
     var privateChannel = postal.channel("private");
 
     var taskHub = $.connection.taskBoardHub;
+    //or without proxy:
+    //var taskHub = connection.createHubProxy('taskBoardHub');
 
-    taskHub.client.columnPropertyModified = function (columnId, propertyName, val) {
+    taskHub.on("columnPropertyModified", function (columnId, propertyName, val) {
         console.log("Received " + propertyName + " was set to " + val);
         channel.publish("modify.column.property." + propertyName, { newValue: val, id: columnId, _incoming: true });
-    };
+    });
 
     privateChannel.subscribe("modify.column.property.*", function (d, envelope) {
         if (!d._incoming) {
             var properties = envelope.topic.split('.');
-            taskHub.server.columnPropertyModified(d.id, properties[properties.length - 1], d.newValue);
+            taskHub.invoke("columnPropertyModified", d.id, properties[properties.length - 1], d.newValue);
         }
     });
 
