@@ -198,7 +198,6 @@
   <ItemGroup>
     <Compile Include="Startup.cs" />
     <Content Include="App\durandal\amd\almond-custom.js" />
-    <Content Include="App\durandal\amd\optimizer.exe" />
     <Content Include="App\durandal\amd\r.js" />
     <Content Include="App\durandal\amd\require.js" />
     <Content Include="App\durandal\amd\text.js" />
